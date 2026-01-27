@@ -3,28 +3,32 @@ package main
 import "fmt"
 
 /*
-📌 INTERFACE IN GO (BEST INTERVIEW + PROJECT DEFINITION)
+====================== INTERFACE MENTAL MODEL ======================
 
-An interface in Go is a collection of method signatures
-that defines a behavior.
-Any type that implements all the methods of an interface
-automatically satisfies that interface,
-without explicitly declaring it.
+INTERFACE   → Rule Book (WHAT to do)
+STRUCT      → Worker (HOW to do)
+SERVICE     → Boss (Business Logic)
+main()      → Owner / HR (Decides which worker is used)
 
-🔹 Why interfaces are used?
-✔ To achieve loose coupling
-✔ To support multiple implementations
-✔ To make code scalable and testable
-✔ To follow clean architecture principles
-
-👉 In simple words:
-Interface decides WHAT to do, not HOW to do.
+===================================================================
 */
 
-// PaymentGateway defines payment behavior
+/*
+📌 INTERFACE (RULE BOOK)
+
+Jo bhi payment karega,
+usko Pay(amount) aana hi chahiye
+*/
 type PaymentGateway interface {
 	Pay(amount float64) error
 }
+
+/*
+====================== WORKERS ======================
+Har worker rule book follow karta hai
+*/
+
+// 👷 Worker 1: Razorpay
 type Razorpay struct{}
 
 func (r *Razorpay) Pay(amount float64) error {
@@ -32,6 +36,7 @@ func (r *Razorpay) Pay(amount float64) error {
 	return nil
 }
 
+// 👷 Worker 2: Stripe
 type Stripe struct{}
 
 func (s *Stripe) Pay(amount float64) error {
@@ -39,37 +44,49 @@ func (s *Stripe) Pay(amount float64) error {
 	return nil
 }
 
-type paypal struct{}
+// 👷 Worker 3: Paypal
+type Paypal struct{}
 
-func (p *paypal) Pay(amount float64) error {
-	fmt.Println("Paayment done using Paypal:", amount)
+func (p *Paypal) Pay(amount float64) error {
+	fmt.Println("Payment done using Paypal:", amount)
 	return nil
 }
 
-// Boss class
+/*
+====================== BOSS ======================
+
+Boss ko worker ka naam nahi chahiye
+Boss ko bas rule book chahiye
+*/
 type PaymentService struct {
 	gateway PaymentGateway
 }
 
+// Boss ka order
 func (p *PaymentService) MakePayment(amount float64) error {
 	return p.gateway.Pay(amount)
 }
 
+/*
+====================== OWNER / HR ======================
+Yahin decide hota hai kaun sa worker kaam karega
+*/
 func main() {
 
+	// 👨‍💼 Owner decides: Razorpay
 	razorpay := &Razorpay{}
 	paymentService := PaymentService{
 		gateway: razorpay,
 	}
-
 	paymentService.MakePayment(100)
 
+	// 👨‍💼 Owner switches to Stripe
 	stripe := &Stripe{}
 	paymentService.gateway = stripe
 	paymentService.MakePayment(250)
 
-	paypal := &paypal{}
+	// 👨‍💼 Owner switches to Paypal
+	paypal := &Paypal{}
 	paymentService.gateway = paypal
 	paymentService.MakePayment(500)
-
 }
