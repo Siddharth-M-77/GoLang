@@ -2,6 +2,9 @@ package main
 
 import "fmt"
 
+//what is Enum?
+//enum is a data type that represents a set of constants
+
 /*
 ====================== ORDER STATUS (ENUM STYLE) ======================
 
@@ -23,6 +26,9 @@ const (
 	Pending
 	Cancelled
 )
+
+//iota ?
+//iota is a pre-defined variable in Go that is used to generate sequential values for constants.
 
 /*
 String() method

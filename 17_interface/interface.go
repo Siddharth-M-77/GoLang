@@ -63,6 +63,8 @@ type PaymentService struct {
 }
 
 // Boss ka order
+
+// adding method to PaymentService
 func (p *PaymentService) MakePayment(amount float64) error {
 	return p.gateway.Pay(amount)
 }
