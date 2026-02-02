@@ -113,12 +113,10 @@ func channelCloseExample() {
 		}
 		close(ch)
 	}()
-
 	//here is we using infine for loop
 	//why we user here for inifine loop?
 	// 	We use an infinite loop with the ok pattern because we don’t know how many values a channel will send.
 	// The loop safely exits when the channel is closed.
-
 	for {
 		value, ok := <-ch
 		if !ok {
