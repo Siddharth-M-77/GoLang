@@ -101,6 +101,7 @@ func bufferedChannelExample() {
 - ok = true  → value received
 - ok = false → channel closed
 */
+
 func channelCloseExample() {
 	fmt.Println("\n--- Channel Close Example ---")
 
@@ -110,8 +111,10 @@ func channelCloseExample() {
 		for i := 1; i <= 3; i++ {
 			ch <- i
 		}
-		close(ch) // sender closes channel
+		close(ch)
 	}()
+
+	//here is we using infine for loop
 
 	for {
 		value, ok := <-ch
@@ -326,13 +329,13 @@ func main() {
 	fmt.Println("🚀 Go Channels Complete Guide")
 
 	basicChannelExample()
-	bufferedChannelExample()
-	channelCloseExample()
-	rangeChannelExample()
-	directionalChannelExample()
-	workerExample()
-	fanInFanOutExample()
-	selectExample()
+	// bufferedChannelExample()
+	// channelCloseExample()
+	// rangeChannelExample()
+	// directionalChannelExample()
+	// workerExample()
+	// fanInFanOutExample()
+	// selectExample()
 
 	fmt.Println("\n✅ All channel examples executed successfully")
 }
